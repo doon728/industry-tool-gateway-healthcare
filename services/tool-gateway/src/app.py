@@ -1,11 +1,20 @@
 from __future__ import annotations
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from src.tools.registry import TOOL_REGISTRY
 
 app = FastAPI(title="Tool Gateway", version="v1")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class InvokeRequest(BaseModel):
